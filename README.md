@@ -47,6 +47,4 @@ When env is set to development this API (with the help of [winston](https://gith
 
 ## TODO:
 
-### Move from mocha to jest
-
-### Remove joi and express-validation
+### Move joi to @hapi/joi and remove express-validation

@@ -1,18 +1,18 @@
-const Joi = require('joi');
+const Joi = require("joi");
 
-require('dotenv').config();
+require("dotenv").config();
 
 const envVarsSchema = Joi.object({
   NODE_ENV: Joi.string()
-    .allow(['development', 'production', 'test'])
-    .default('development'),
-  BASE_PATH: Joi.string().default('/'),
-  PROXY_PATH: Joi.string().default(''),
+    .allow(["development", "production", "test"])
+    .default("development"),
+  BASE_PATH: Joi.string().default("/"),
+  PROXY_PATH: Joi.string().default(""),
   PORT: Joi.number().default(3000),
   MONGO_HOST: Joi.string()
-    .description('Mongo DB host url')
+    .description("Mongo DB host url")
     .required(),
-  MONGO_DB_NAME: Joi.string().default('default')
+  MONGO_DB_NAME: Joi.string().default("default")
 })
   .unknown()
   .required();

@@ -10,12 +10,12 @@
     "start": "node index",
     "dev": "nodemon index",
     "lint": "esw *.js server config --color",
-    "lint:watch": "npm lint -- --watch",
-    "test": "cross-env NODE_ENV=test mocha --timeout 10000 --ui bdd --reporter spec --colors tests --recursive --exit",
-    "test:watch": "npm test -- --watch"
+    "lint:watch": "yarn lint -- --watch",
+    "test": "cross-env NODE_ENV=test jest --forceExit",
+    "test:watch": "yarn test -- --watch"
   },
   "author": "Carlos Avilan",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -34,12 +34,10 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
     "eslint": "^6.6.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-config-prettier": "^6.5.0",
     "eslint-watch": "^6.0.1",
-    "mocha": "^6.2.2",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.4",
     "supertest": "^4.0.2"
   }

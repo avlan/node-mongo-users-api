@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 
-const httpStatus = require('http-status');
+const httpStatus = require("http-status");
 
 /**
  * @extends Error

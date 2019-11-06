@@ -1,12 +1,5 @@
 {
   "rules": {
-    "indent": [
-      2,
-      2,
-      {
-        "SwitchCase": 1
-      }
-    ],
     "space-before-function-paren": [
       2,
       {
@@ -14,33 +7,17 @@
         "named": "never"
       }
     ],
-    "no-use-before-define": [
-      2,
-      "nofunc"
-    ],
-    "comma-dangle": [
-      0
-    ],
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": true
-      }
-    ],
-    "no-underscore-dangle": [
-      0
-    ]
+    "no-use-before-define": [2, "nofunc"],
+    "comma-dangle": [0],
+    "no-underscore-dangle": [0]
   },
   "env": {
     "node": true,
-    "mocha": true
+    "jest": true
   },
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 10,
     "sourceType": "module"
   },
-  "extends": [
-    "eslint:recommended",
-    "airbnb-base"
-  ]
+  "extends": ["prettier", "eslint:recommended"]
 }
