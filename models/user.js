@@ -28,24 +28,26 @@ const Schema = mongoose.Schema; // eslint-disable-line prefer-destructuring
  *       username:
  *         type: string
  */
-const UserSchema = new Schema({
-  name: {
-    type: String,
+const UserSchema = new Schema(
+  {
+    name: {
+      type: String
+    },
+    dateOfBirth: {
+      type: Date
+    },
+    address: {
+      type: String
+    },
+    description: {
+      type: String
+    },
+    username: {
+      type: String,
+      required: true
+    }
   },
-  dateOfBirth: {
-    type: Date,
-  },
-  address: {
-    type: String,
-  },
-  description: {
-    type: String,
-  },
-  username: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-}, { timestamps: true, versionKey: false });
+  { timestamps: true, versionKey: false }
+);
 
 module.exports = mongoose.model('User', UserSchema);

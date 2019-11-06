@@ -4,7 +4,6 @@ const swaggerTools = require('swagger-tools');
 const swaggerDoc = require('swagger-jsdoc');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const Promise = require('bluebird');
 const express = require('express');
 const winston = require('winston');
 const logger = require('morgan');
@@ -16,9 +15,9 @@ const routes = require('./routes');
 
 const app = express();
 
-const winstonInstance = new (winston.Logger)({
+const winstonInstance = winston.createLogger({
   transports: [
-    new (winston.transports.Console)({
+    new winston.transports.Console({
       json: true,
       colorize: true
     })
@@ -29,15 +28,11 @@ const spec = swaggerDoc({
   swaggerDefinition: {
     info: {
       title: 'Users api',
-      version: '0.0.1',
+      version: '0.0.1'
     },
-    basePath: config.basePath,
+    basePath: config.basePath
   },
-  apis: [
-    'routes/**/*.js',
-    'models/**/*.js',
-    'controllers/**/*.js',
-  ],
+  apis: ['routes/**/*.js', 'models/**/*.js', 'controllers/**/*.js']
 });
 
 if (config.env === 'development') {
@@ -53,41 +48,54 @@ app.use(cors());
 if (config.env === 'development') {
   expressWinston.requestWhitelist.push('body');
   expressWinston.responseWhitelist.push('body');
-  app.use(expressWinston.logger({
-    winstonInstance,
-    meta: true,
-    msg: 'HTTP {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms',
-    colorStatus: true
-  }));
+  app.use(
+    expressWinston.logger({
+      winstonInstance,
+      meta: true,
+      msg:
+        'HTTP {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms',
+      colorStatus: true
+    })
+  );
 }
 
 swaggerTools.initializeMiddleware(spec, (middleware) => {
   app.use(config.basePath, routes);
-  app.use(middleware.swaggerUi({
-    apiDocs: `${config.basePath}docs.json`,
-    swaggerUi: `${config.basePath}docs`,
-    apiDocsPrefix: config.proxyPath,
-    swaggerUiPrefix: config.proxyPath,
-  }));
+  app.use(
+    middleware.swaggerUi({
+      apiDocs: `${config.basePath}docs.json`,
+      swaggerUi: `${config.basePath}docs`,
+      apiDocsPrefix: config.proxyPath,
+      swaggerUiPrefix: config.proxyPath
+    })
+  );
   app.use(middlewares.convertToApiError);
   app.use(middlewares.notFound);
   if (config.env !== 'test') {
-    app.use(expressWinston.errorLogger({
-      winstonInstance
-    }));
+    app.use(
+      expressWinston.errorLogger({
+        winstonInstance
+      })
+    );
   }
   app.use(middlewares.addTrace);
 
   const querystring = `${config.mongo.host}${config.mongo.name}`;
 
-  mongoose.models = {};
-  mongoose.modelSchemas = {};
+  mongoose
+    .connect(querystring, {
+      useNewUrlParser: true,
+      useFindAndModify: false,
+      useUnifiedTopology: true
+    })
+    .then(({ connections }) => console.log(`Connected to Mongo server in ${connections[0].name}`)) // eslint-disable-line no-console
+    .catch((error) => {
+      console.error(error); // eslint-disable-line no-console
 
-  mongoose.Promise = Promise;
-
-  mongoose.connect(querystring, { useMongoClient: true })
-    .then(({ db: { databaseName } }) => console.log(`Connected to Mongo server in ${databaseName}`)) // eslint-disable-line no-console
-    .catch(() => Promise.reject(new Error(`Unable to connect to database: ${querystring}`)));
+      return Promise.reject(
+        new Error(`Unable to connect to database: ${querystring}`)
+      );
+    });
 
   if (!module.parent) {
     app.listen(config.port, () => {

@@ -1,7 +1,4 @@
-const objectId = require('joi-objectid');
 const Joi = require('joi');
-
-Joi.objectId = objectId(Joi);
 
 module.exports = {
   create: {
@@ -10,8 +7,8 @@ module.exports = {
       username: Joi.string().required(),
       dateOfBirth: Joi.date(),
       address: Joi.string(),
-      description: Joi.string(),
-    },
+      description: Joi.string()
+    }
   },
   update: {
     body: {
@@ -21,7 +18,7 @@ module.exports = {
       address: Joi.string(),
       description: Joi.string(),
       createdAt: Joi.date(),
-      updatedAt: Joi.date(),
-    },
-  },
+      updatedAt: Joi.date()
+    }
+  }
 };

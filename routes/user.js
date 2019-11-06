@@ -5,13 +5,15 @@ const userCtrl = require('../controllers/user');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
-router.route('/')
+router
+  .route('/')
   /** GET /api/users - get all users */
   .get(userCtrl.readAll)
   /** POST /api/users - Create new user */
   .post(validate(paramValidation.create), userCtrl.create);
 
-router.route('/:userId')
+router
+  .route('/:userId')
   /** GET /api/users/:userId - Get user */
   .get(userCtrl.read)
 

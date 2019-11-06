@@ -10,7 +10,7 @@ chai.config.includeStack = true;
 describe('## User APIs', () => {
   const user = {
     username: `${+new Date()}@test.com`,
-    name: 'Test',
+    name: 'Test'
   };
   let createdUser;
 

@@ -5,7 +5,7 @@ const userRoutes = require('./user');
 const router = express.Router(); // eslint-disable-line new-cap
 
 validate.options({
-  allowUnknownBody: false,
+  allowUnknownBody: false
 });
 
 router.use('/users', userRoutes);

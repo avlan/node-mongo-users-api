@@ -74,7 +74,7 @@ const UserController = {
     return User.find(filter)
       .skip(offset)
       .limit(limit)
-      .then(users => res.json({
+      .then((users) => res.json({
         users,
         page,
         count: users.length,
@@ -122,7 +122,7 @@ const UserController = {
   */
   create(req, res, next) {
     User.create(req.body)
-      .then(newUser => res.status(httpStatus.CREATED).json(newUser))
+      .then((newUser) => res.status(httpStatus.CREATED).json(newUser))
       .catch(next);
   },
   /**

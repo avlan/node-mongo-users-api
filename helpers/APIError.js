@@ -1,3 +1,5 @@
+/* eslint-disable max-classes-per-file */
+
 const httpStatus = require('http-status');
 
 /**
@@ -10,7 +12,6 @@ class ExtendableError extends Error {
     this.message = message;
     this.status = status;
     this.isPublic = isPublic;
-    this.isOperational = true; // This is required since bluebird 4 doesn't append it anymore.
     Error.captureStackTrace(this, this.constructor.name);
   }
 }
@@ -26,9 +27,14 @@ class APIError extends ExtendableError {
    * @param {number} status - HTTP status code of error.
    * @param {boolean} isPublic - Whether the message should be visible to user or not.
    */
-  constructor(message, status = httpStatus.INTERNAL_SERVER_ERROR, isPublic = false) {
+  constructor(
+    message,
+    status = httpStatus.INTERNAL_SERVER_ERROR,
+    isPublic = false
+  ) {
     super(message, status, isPublic);
   }
 }
 
 module.exports = APIError;
+/* eslint-enable max-classes-per-file */
