@@ -5,7 +5,6 @@ const app = require('../index');
 const config = require('../config');
 
 const expect = chai.expect; // eslint-disable-line prefer-destructuring
-chai.config.includeStack = true;
 
 describe('## User APIs', () => {
   const user = {

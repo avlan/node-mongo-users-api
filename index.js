@@ -1,7 +1,5 @@
 const methodOverride = require('method-override');
 const expressWinston = require('express-winston');
-const swaggerTools = require('swagger-tools');
-const swaggerDoc = require('swagger-jsdoc');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const express = require('express');
@@ -22,17 +20,6 @@ const winstonInstance = winston.createLogger({
       colorize: true
     })
   ]
-});
-
-const spec = swaggerDoc({
-  swaggerDefinition: {
-    info: {
-      title: 'Users api',
-      version: '0.0.1'
-    },
-    basePath: config.basePath
-  },
-  apis: ['routes/**/*.js', 'models/**/*.js', 'controllers/**/*.js']
 });
 
 if (config.env === 'development') {
@@ -59,49 +46,40 @@ if (config.env === 'development') {
   );
 }
 
-swaggerTools.initializeMiddleware(spec, (middleware) => {
-  app.use(config.basePath, routes);
+app.use(config.basePath, routes);
+
+app.use(middlewares.convertToApiError);
+app.use(middlewares.notFound);
+if (config.env !== 'test') {
   app.use(
-    middleware.swaggerUi({
-      apiDocs: `${config.basePath}docs.json`,
-      swaggerUi: `${config.basePath}docs`,
-      apiDocsPrefix: config.proxyPath,
-      swaggerUiPrefix: config.proxyPath
+    expressWinston.errorLogger({
+      winstonInstance
     })
   );
-  app.use(middlewares.convertToApiError);
-  app.use(middlewares.notFound);
-  if (config.env !== 'test') {
-    app.use(
-      expressWinston.errorLogger({
-        winstonInstance
-      })
+}
+app.use(middlewares.addTrace);
+
+const querystring = `${config.mongo.host}${config.mongo.name}`;
+
+mongoose
+  .connect(querystring, {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true
+  })
+  .then(({ connections }) => console.log(`Connected to Mongo server in ${connections[0].name}`)) // eslint-disable-line no-console
+  .catch((error) => {
+    console.error(error); // eslint-disable-line no-console
+
+    return Promise.reject(
+      new Error(`Unable to connect to database: ${querystring}`)
     );
-  }
-  app.use(middlewares.addTrace);
+  });
 
-  const querystring = `${config.mongo.host}${config.mongo.name}`;
-
-  mongoose
-    .connect(querystring, {
-      useNewUrlParser: true,
-      useFindAndModify: false,
-      useUnifiedTopology: true
-    })
-    .then(({ connections }) => console.log(`Connected to Mongo server in ${connections[0].name}`)) // eslint-disable-line no-console
-    .catch((error) => {
-      console.error(error); // eslint-disable-line no-console
-
-      return Promise.reject(
-        new Error(`Unable to connect to database: ${querystring}`)
-      );
-    });
-
-  if (!module.parent) {
-    app.listen(config.port, () => {
-      console.info(`API started on port ${config.port} (${config.env})`); // eslint-disable-line no-console
-    });
-  }
-});
+if (!module.parent) {
+  app.listen(config.port, () => {
+    console.info(`API started on port ${config.port} (${config.env})`); // eslint-disable-line no-console
+  });
+}
 
 module.exports = app;

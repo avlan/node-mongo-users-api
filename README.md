@@ -2,7 +2,7 @@
 
 ## Description
 
-Simple RESTful API to `get/create/update/delete` users from a persistence database.
+Simple RESTful MVC API to `get/create/update/delete` users from a persistence database.
 
 ### Tech stack
 
@@ -35,7 +35,7 @@ Simple RESTful API to `get/create/update/delete` users from a persistence databa
 - `MONGO_HOST`: (_REQUIRED_) MongoDB host url
 - `MONGO_DB_NAME`: (_default: default, REQUIERED when using docker_) Database name
 
-For deploying this project just `npm install` and `npm start` with the required env variables, it is adviced to store them in a `.env` file for simplicity.
+For deploying this project just `yarn` and `yarn start` with the required env variables, it is adviced to store them in a `.env` file for simplicity.
 
 ### Unit tests
 
@@ -46,8 +46,6 @@ A BDD approach is used in order for creating tests, [Mocha](https://mochajs.org/
 When env is set to development this API (with the help of [winston](https://github.com/winstonjs/winston) and [morgan](https://github.com/expressjs/morgan)) logs everything happening in the request, from the method used to the status code, body, headers and even response time.
 
 ## TODO:
-
-### Remove Swagger and the nasty docs
 
 ### Move from mocha to jest
 
