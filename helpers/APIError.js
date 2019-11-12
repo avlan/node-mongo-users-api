@@ -1,5 +1,3 @@
-/* eslint-disable max-classes-per-file */
-
 const httpStatus = require("http-status");
 
 /**
@@ -37,4 +35,3 @@ class APIError extends ExtendableError {
 }
 
 module.exports = APIError;
-/* eslint-enable max-classes-per-file */

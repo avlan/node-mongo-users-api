@@ -1,10 +1,10 @@
-const Joi = require("joi");
+const Joi = require("@hapi/joi");
 
 require("dotenv").config();
 
 const envVarsSchema = Joi.object({
   NODE_ENV: Joi.string()
-    .allow(["development", "production", "test"])
+    .valid("development", "production", "test")
     .default("development"),
   BASE_PATH: Joi.string().default("/"),
   PROXY_PATH: Joi.string().default(""),
@@ -17,7 +17,7 @@ const envVarsSchema = Joi.object({
   .unknown()
   .required();
 
-const { error, value: envVars } = Joi.validate(process.env, envVarsSchema);
+const { error, value: envVars } = envVarsSchema.validate(process.env);
 if (error) {
   throw new Error(`Config validation error: ${error.message}`);
 }

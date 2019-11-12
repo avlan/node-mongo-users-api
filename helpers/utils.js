@@ -1,15 +1,19 @@
 const httpStatus = require("http-status");
 const APIError = require("../helpers/APIError");
 
-const validObjectID = new RegExp("^[0-9a-fA-F]{24}$");
+const Joi = require("@hapi/joi");
 
 module.exports = {
-  isObjectID: objectID => validObjectID.test(objectID),
-  /* eslint-disable consistent-return */
-  isValidObjectID: (userId, next) => {
-    if (!validObjectID.test(userId)) {
-      return next(new APIError("Not Found", httpStatus.NOT_FOUND));
+  joiValidator: schema => input => {
+    const result = Joi.object(schema).validate(input, {
+      allowUnknown: false,
+      abortEarly: false
+    });
+
+    if (result.error) {
+      throw new APIError("ValidationError", httpStatus.BAD_REQUEST);
     }
+
+    return result.value;
   }
-  /* eslint-enable consistent-return */
 };

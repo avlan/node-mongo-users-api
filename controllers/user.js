@@ -1,7 +1,6 @@
 const httpStatus = require("http-status");
 const User = require("../models/user");
 const APIError = require("../helpers/APIError");
-const utils = require("../helpers/utils");
 
 const UserController = {
   readAll(req, res, next) {
@@ -31,7 +30,7 @@ const UserController = {
   },
   read(req, res, next) {
     const { userId } = req.params;
-    utils.isValidObjectID(userId, next);
+
     return User.findOne({ _id: userId })
       .then(user => {
         if (!user) {
@@ -43,7 +42,7 @@ const UserController = {
   },
   update(req, res, next) {
     const { userId } = req.params;
-    utils.isValidObjectID(userId, next);
+
     return User.findByIdAndUpdate(
       { _id: userId },
       { $set: req.body },
@@ -59,7 +58,7 @@ const UserController = {
   },
   delete(req, res, next) {
     const { userId } = req.params;
-    utils.isValidObjectID(userId, next);
+
     return User.findOneAndRemove({ _id: userId })
       .then(user => {
         if (!user) {

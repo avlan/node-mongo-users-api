@@ -47,4 +47,8 @@ When env is set to development this API (with the help of [winston](https://gith
 
 ## TODO:
 
-### Move joi to @hapi/joi and remove express-validation
+## Catch errors in default middleware
+
+## Revisit logic for throwing errors
+
+## Revisit API error

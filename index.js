@@ -66,14 +66,6 @@ mongoose.connect(querystring, {
   useFindAndModify: false,
   useUnifiedTopology: true
 });
-// .then(({ connections }) => console.log(`Connected to Mongo server in ${connections[0].name}`)) // eslint-disable-line no-console
-// .catch((error) => {
-//   console.error(error); // eslint-disable-line no-console
-
-//   return Promise.reject(
-//     new Error(`Unable to connect to database: ${querystring}`)
-//   );
-// });
 
 if (!module.parent) {
   app.listen(config.port, () => {

@@ -1,5 +1,5 @@
 const express = require("express");
-const validate = require("express-validation");
+const { validateRoute } = require("../helpers/middlewares");
 const paramValidation = require("../param_validations/user");
 const userCtrl = require("../controllers/user");
 
@@ -10,7 +10,7 @@ router
   /** GET /api/users - get all users */
   .get(userCtrl.readAll)
   /** POST /api/users - Create new user */
-  .post(validate(paramValidation.create), userCtrl.create);
+  .post(validateRoute(paramValidation.create), userCtrl.create);
 
 router
   .route("/:userId")
@@ -18,9 +18,9 @@ router
   .get(userCtrl.read)
 
   /** PUT /api/users/:userId - Update user */
-  .put(validate(paramValidation.update), userCtrl.update)
+  .put(validateRoute(paramValidation.update), userCtrl.update)
 
   /** DELETE /api/users/:userId - Delete user */
-  .delete(userCtrl.delete);
+  .delete(validateRoute(paramValidation.delete), userCtrl.delete);
 
 module.exports = router;

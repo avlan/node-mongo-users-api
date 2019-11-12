@@ -1,4 +1,4 @@
-const Joi = require("joi");
+const Joi = require("@hapi/joi");
 
 module.exports = {
   create: {
@@ -19,6 +19,10 @@ module.exports = {
       description: Joi.string(),
       createdAt: Joi.date(),
       updatedAt: Joi.date()
-    }
+    },
+    params: { userId: Joi.string() }
+  },
+  delete: {
+    params: { userId: Joi.string() }
   }
 };
