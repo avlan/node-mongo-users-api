@@ -13,26 +13,26 @@ const UserController = {
     return User.find(filter)
       .skip(offset)
       .limit(limit)
-      .then(users =>
+      .then((users) =>
         res.json({
           users,
           page,
           count: users.length,
-          limit
+          limit,
         })
       )
       .catch(next);
   },
   create(req, res, next) {
     return User.create(req.body)
-      .then(newUser => res.status(httpStatus.CREATED).json(newUser))
+      .then((newUser) => res.status(httpStatus.CREATED).json(newUser))
       .catch(next);
   },
   read(req, res, next) {
     const { userId } = req.params;
 
     return User.findOne({ _id: userId })
-      .then(user => {
+      .then((user) => {
         if (!user) {
           return next(new APIError("Not Found", httpStatus.NOT_FOUND));
         }
@@ -48,7 +48,7 @@ const UserController = {
       { $set: req.body },
       { new: true }
     )
-      .then(user => {
+      .then((user) => {
         if (!user) {
           return next(new APIError("Not Found", httpStatus.NOT_FOUND));
         }
@@ -60,14 +60,14 @@ const UserController = {
     const { userId } = req.params;
 
     return User.findOneAndRemove({ _id: userId })
-      .then(user => {
+      .then((user) => {
         if (!user) {
           return next(new APIError("Not Found", httpStatus.NOT_FOUND));
         }
         return res.json(user);
       })
       .catch(next);
-  }
+  },
 };
 
 module.exports = UserController;

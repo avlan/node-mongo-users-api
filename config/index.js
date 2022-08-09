@@ -1,4 +1,4 @@
-const Joi = require("@hapi/joi");
+const Joi = require("joi");
 
 require("dotenv").config();
 
@@ -9,10 +9,8 @@ const envVarsSchema = Joi.object({
   BASE_PATH: Joi.string().default("/"),
   PROXY_PATH: Joi.string().default(""),
   PORT: Joi.number().default(3000),
-  MONGO_HOST: Joi.string()
-    .description("Mongo DB host url")
-    .required(),
-  MONGO_DB_NAME: Joi.string().default("default")
+  MONGO_HOST: Joi.string().description("Mongo DB host url").required(),
+  MONGO_DB_NAME: Joi.string().default("default"),
 })
   .unknown()
   .required();
@@ -27,10 +25,10 @@ const config = {
   port: envVars.PORT,
   mongo: {
     host: envVars.MONGO_HOST,
-    name: envVars.MONGO_DB_NAME
+    name: envVars.MONGO_DB_NAME,
   },
   basePath: envVars.BASE_PATH,
-  proxyPath: envVars.PROXY_PATH
+  proxyPath: envVars.PROXY_PATH,
 };
 
 module.exports = config;

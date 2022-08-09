@@ -8,7 +8,7 @@ module.exports = {
   convertToApiError: (err, req, res, next) => {
     if (err instanceof APIError && err.message === "Not found") {
       const unifiedErrorMessage = err.errors
-        .map(error => error.messages.join(". "))
+        .map((error) => error.messages.join(". "))
         .join(" and ");
       const error = new APIError(unifiedErrorMessage, err.status, true);
       return next(error);
@@ -27,15 +27,15 @@ module.exports = {
   addTrace: (err, req, res, next) =>
     res.status(err.status || 500).json({
       message: err.isPublic ? err.message : httpStatus[err.status],
-      stack: config.env !== "test" ? err.stack : {}
+      stack: config.env !== "test" ? err.stack : {},
     }),
   /* eslint-enable no-unused-vars */
-  validateRoute: schema => {
+  validateRoute: (schema) => {
     const validator = joiValidator({
       query: {},
       params: {},
       body: {},
-      ...schema
+      ...schema,
     });
 
     return (req, res, next) => {
@@ -50,5 +50,5 @@ module.exports = {
         return next(error);
       }
     };
-  }
+  },
 };

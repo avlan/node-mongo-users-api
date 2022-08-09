@@ -3,21 +3,21 @@ const mongoose = require("mongoose");
 const UserSchema = new mongoose.Schema(
   {
     name: {
-      type: String
+      type: String,
     },
     dateOfBirth: {
-      type: Date
+      type: Date,
     },
     address: {
-      type: String
+      type: String,
     },
     description: {
-      type: String
+      type: String,
     },
     username: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   { timestamps: true, versionKey: false }
 );

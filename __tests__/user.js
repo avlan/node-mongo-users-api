@@ -11,7 +11,7 @@ describe("## User APIs", () => {
   beforeEach(() => {
     user = {
       username: `${+new Date()}@test.com`,
-      name: "Test"
+      name: "Test",
     };
   });
 
@@ -21,7 +21,7 @@ describe("## User APIs", () => {
         .post(`${config.basePath}users`)
         .send(user)
         .expect(httpStatus.CREATED)
-        .then(res => {
+        .then((res) => {
           expect(res.body.name).toEqual(user.name);
         }));
     it("should get error for sending non especified values", () =>
@@ -40,7 +40,7 @@ describe("## User APIs", () => {
       request(app)
         .get(`${config.basePath}users/${createdUser._id}`)
         .expect(httpStatus.OK)
-        .then(res => {
+        .then((res) => {
           expect(res.body.name).toEqual(user.name);
         });
     });
@@ -72,7 +72,7 @@ describe("## User APIs", () => {
         .put(`${config.basePath}users/${createdUser._id}`)
         .send({ name: newName })
         .expect(httpStatus.OK)
-        .then(res => {
+        .then((res) => {
           expect(res.body.name).toEqual(newName);
         });
     });
@@ -95,7 +95,7 @@ describe("## User APIs", () => {
       await request(app)
         .delete(`${config.basePath}users/${createdUser._id}`)
         .expect(httpStatus.OK)
-        .then(res => {
+        .then((res) => {
           expect(res.body._id).toEqual(createdUser._id);
         });
     });

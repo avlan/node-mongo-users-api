@@ -27,7 +27,7 @@ Simple RESTful MVC API to `get/create/update/delete` users from a persistence da
 
 ### Documentation and deployment
 
-[Swagger](https://swagger.io/) is used for documenting endpoints. This documentatation can be found at `/docs` of the base path (e.g. `http://localhost:3000/docs`). This API uses and requires a few env variables (that can be stored in a `.env` file) listed bellow:
+~~[Swagger](https://swagger.io/) is used for documenting endpoints. This documentatation can be found at `/docs` of the base path (e.g. `http://localhost:3000/docs`)~~ **Currently not using swagger, need to evaluate if still should use it**. This API uses and requires a few env variables (that can be stored in a `.env` file) listed bellow:
 
 - `NODE_ENV`: (_default: development_) this is the usual environment variable, this API is thought to use 3; `development`, `production` and `test`
 - `BASE_PATH`: (_default: /_) this is the main route for the API, it should end always with `/`

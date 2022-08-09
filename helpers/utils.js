@@ -1,13 +1,13 @@
 const httpStatus = require("http-status");
 const APIError = require("../helpers/APIError");
 
-const Joi = require("@hapi/joi");
+const Joi = require("joi");
 
 module.exports = {
-  joiValidator: schema => input => {
+  joiValidator: (schema) => (input) => {
     const result = Joi.object(schema).validate(input, {
       allowUnknown: false,
-      abortEarly: false
+      abortEarly: false,
     });
 
     if (result.error) {
@@ -15,5 +15,5 @@ module.exports = {
     }
 
     return result.value;
-  }
+  },
 };

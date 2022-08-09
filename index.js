@@ -17,9 +17,9 @@ const winstonInstance = winston.createLogger({
   transports: [
     new winston.transports.Console({
       json: true,
-      colorize: true
-    })
-  ]
+      colorize: true,
+    }),
+  ],
 });
 
 if (config.env === "development") {
@@ -39,9 +39,8 @@ if (config.env === "development") {
     expressWinston.logger({
       winstonInstance,
       meta: true,
-      msg:
-        "HTTP {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms",
-      colorStatus: true
+      msg: "HTTP {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms",
+      colorStatus: true,
     })
   );
 }
@@ -53,7 +52,7 @@ app.use(middlewares.notFound);
 if (config.env !== "test") {
   app.use(
     expressWinston.errorLogger({
-      winstonInstance
+      winstonInstance,
     })
   );
 }
@@ -61,11 +60,7 @@ app.use(middlewares.addTrace);
 
 const querystring = `${config.mongo.host}${config.mongo.name}`;
 
-mongoose.connect(querystring, {
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true
-});
+mongoose.connect(querystring);
 
 if (!module.parent) {
   app.listen(config.port, () => {
